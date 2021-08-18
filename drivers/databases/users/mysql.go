@@ -30,3 +30,7 @@ func (ur *MysqlUserRepository) UserLogin(ctx context.Context, email, password st
 	rec := fromDomain(users.Domain{})
 	return rec.toDomain(), nil
 }
+
+func (ur *MysqlUserRepository) GetByParam(ctx context.Context, domain *users.Domain) (res users.Domain, err error) {
+	return res, nil
+}

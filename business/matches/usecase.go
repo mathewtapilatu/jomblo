@@ -1,4 +1,4 @@
-package mathces
+package matches
 
 import "context"
 
@@ -12,16 +12,16 @@ func UserMatchesUsecase(Mr Repository) Usecase {
 	}
 }
 
-func (Mr MatchesUsecase) MatchesID(ctx context.Context, Id, UserID int) (Domain, error) {
-	_, cancel := Mr.MatchesRepository.RepoMatchesID(ctx, Id, UserID)
+func (Mr MatchesUsecase) MatchesID(ctx context.Context, domain *Domain) (Domain, error) {
+	_, cancel := Mr.MatchesRepository.RepoMatchesID(ctx, domain)
 	if cancel != nil {
 		return Domain{}, nil
 	}
 	return Domain{}, nil
 }
 
-func (Mr MatchesUsecase) UserID(ctx context.Context, Id int) (Domain, error) {
-	_, cancel := Mr.MatchesRepository.RepoUserID(ctx, Id)
+func (Mr MatchesUsecase) UserID(ctx context.Context, domain *Domain) (Domain, error) {
+	_, cancel := Mr.MatchesRepository.RepoUserID(ctx, domain)
 	if cancel != nil {
 		return Domain{}, nil
 	}

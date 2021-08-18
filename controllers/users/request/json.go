@@ -2,6 +2,8 @@ package request
 
 import "jomblo/business/users"
 
+// import "jomblo/business/users"
+
 type Users struct {
 	Name     string `json:"name"`
 	Email    string `json:"email"`

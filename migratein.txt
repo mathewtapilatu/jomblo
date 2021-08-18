@@ -1,0 +1,63 @@
+
+CREATE TABLE `hmm` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `umur` int DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
+  `created_at` datetime(3) DEFAULT NULL,
+  `updated_at` datetime(3) DEFAULT NULL,
+  `deleted_at` datetime(3) DEFAULT NULL,
+  `alamat` longtext,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+CREATE TABLE `users` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `created_at` datetime(3) DEFAULT NULL,
+  `updated_at` datetime(3) DEFAULT NULL,
+  `deleted_at` datetime(3) DEFAULT NULL,
+  `name` longtext,
+  `email` longtext,
+  `alamat` longtext,
+  `password` longtext,
+  `umur` bigint DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+CREATE TABLE `matches` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int DEFAULT NULL,
+  `matches_id` int DEFAULT NULL,
+  `create_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `status` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`),
+  KEY `matches_id` (`matches_id`),
+  CONSTRAINT `matches_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `hmm` (`id`),
+  CONSTRAINT `matches_ibfk_2` FOREIGN KEY (`matches_id`) REFERENCES `hmm` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+CREATE TABLE `channels` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `channels_user_id` int DEFAULT NULL,
+  `channels_mathces_id` int DEFAULT NULL,
+  `create_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `channels_user_id` (`channels_user_id`),
+  KEY `channels_mathces_id` (`channels_mathces_id`),
+  CONSTRAINT `channels_ibfk_1` FOREIGN KEY (`channels_user_id`) REFERENCES `hmm` (`id`),
+  CONSTRAINT `channels_ibfk_2` FOREIGN KEY (`channels_mathces_id`) REFERENCES `matches` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+CREATE TABLE `chats` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `channel_id` int DEFAULT NULL,
+  `message` text,
+  `user_id` int DEFAULT NULL,
+  `create_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `channel_id` (`channel_id`),
+  KEY `user_id` (`user_id`),
+  CONSTRAINT `chats_ibfk_1` FOREIGN KEY (`channel_id`) REFERENCES `channels` (`id`),
+  CONSTRAINT `chats_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `hmm` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci

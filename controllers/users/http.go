@@ -21,8 +21,8 @@ func NewUserController(uc users.Usecase) *UserController {
 
 func (ctrl *UserController) Regis(c echo.Context) error {
 	ctx := c.Request().Context()
-
 	req := request.Users{}
+
 	if err := c.Bind(&req); err != nil {
 		return controller.NewErrorResponse(c, http.StatusBadRequest, err)
 	}

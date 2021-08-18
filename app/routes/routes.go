@@ -1,21 +1,26 @@
 package routes
 
 import (
+	"jomblo/controllers/channels"
+	"jomblo/controllers/matches"
 	"jomblo/controllers/users"
 
 	"github.com/labstack/echo/v4"
 )
 
 type ControllerList struct {
-	UserController users.UserController
+	UserController     users.UserController
+	MatchesController  matches.MatchesController
+	ChannelsController channels.ChannelsController
 }
 
 func (cl *ControllerList) RouteRegister(e *echo.Echo) {
 	users := e.Group("users")
 	users.POST("/register", cl.UserController.Regis)
-}
 
-func (cl *ControllerList) RouteMatches(e *echo.Echo) {
-	users := e.Group("matches")
-	users.POST("/matches", cl.UserController.Regis)
+	matches := e.Group("matches")
+	matches.POST("/matches", cl.MatchesController.UserID)
+
+	channels := e.Group("channels")
+	channels.POST("/channels", cl.ChannelsController.ChannelsUserID)
 }

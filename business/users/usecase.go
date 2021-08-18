@@ -2,6 +2,7 @@ package users
 
 import (
 	"context"
+	"log"
 )
 
 type UserUsecase struct {
@@ -22,10 +23,18 @@ func (Uc UserUsecase) Login(ctx context.Context, email, password string) (Domain
 	return userlogin, nil
 }
 func (Uc UserUsecase) Regis(ctx context.Context, domain *Domain) (Domain, error) {
+
+	err := domain.valid()
+	if err != nil {
+		return Domain{}, err
+	}
+
 	userregister, err := Uc.UserRepository.UserRegis(ctx, domain)
 	if err != nil {
 		return Domain{}, err
 	}
+	log.Println(domain)
+
 	return userregister, nil
 
 }
