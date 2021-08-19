@@ -2,6 +2,7 @@ package routes
 
 import (
 	"jomblo/controllers/channels"
+	"jomblo/controllers/chats"
 	"jomblo/controllers/matches"
 	"jomblo/controllers/users"
 
@@ -12,6 +13,7 @@ type ControllerList struct {
 	UserController     users.UserController
 	MatchesController  matches.MatchesController
 	ChannelsController channels.ChannelsController
+	ChatsController    chats.ChatsController
 }
 
 func (cl *ControllerList) RouteRegister(e *echo.Echo) {
@@ -23,4 +25,7 @@ func (cl *ControllerList) RouteRegister(e *echo.Echo) {
 
 	channels := e.Group("channels")
 	channels.POST("/channels", cl.ChannelsController.ChannelsUserID)
+
+	chats := e.Group("chats")
+	chats.POST("/message", cl.ChatsController.ChannelChatsID)
 }

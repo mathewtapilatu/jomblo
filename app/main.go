@@ -15,6 +15,10 @@ import (
 	_ChannelsController "jomblo/controllers/channels"
 	_ChannelsRepository "jomblo/drivers/databases/channels"
 
+	_ChatsUsecase "jomblo/business/chats"
+	_ChatsController "jomblo/controllers/chats"
+	_ChatsRepository "jomblo/drivers/databases/chats"
+
 	"jomblo/drivers/mysql"
 	"log"
 
@@ -27,6 +31,7 @@ func dbMigrate(db *gorm.DB) {
 		&_UserRepository.Users{},
 		&_MatchesRepository.Matches{},
 		&_ChannelsRepository.Channels{},
+		&_ChatsRepository.Chats{},
 	)
 }
 
@@ -37,7 +42,7 @@ func main() {
 		DB_Password: "Gaktauaku123!",
 		DB_Host:     "localhost",
 		DB_Port:     "3306",
-		DB_Database: "final",
+		DB_Database: "jomblo",
 	}
 
 	db := configDB.InitialDB()
@@ -56,10 +61,15 @@ func main() {
 	ChannelsUsecase := _ChannelsUsecase.UserChannelsUsecase(ChannelsRepository)
 	ChannelsController := _ChannelsController.NewChannelsController(ChannelsUsecase)
 
+	ChatsRepository := _ChatsRepository.NewMysqlChatsRepository(db)
+	ChatsUsecase := _ChatsUsecase.UserChatsUsecase(ChatsRepository)
+	ChatsController := _ChatsController.NewUserController(ChatsUsecase)
+
 	routeInit := routes.ControllerList{
 		UserController:     *UserController,
 		MatchesController:  *MatchesController,
 		ChannelsController: *ChannelsController,
+		ChatsController:    *ChatsController,
 	}
 
 	routeInit.RouteRegister(e)

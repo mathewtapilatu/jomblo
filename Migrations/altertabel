@@ -1,0 +1,10 @@
+ALTER TABLE matches 
+ADD CONSTRAINT `matches_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+ADD CONSTRAINT `matches_ibfk_2` FOREIGN KEY (`matches_id`) REFERENCES `users` (`id`);
+
+ALTER TABLE channels 
+ADD CONSTRAINT `matches_ibfk_3` FOREIGN KEY (`channel_user_id`) REFERENCES `users` (`id`),
+ADD CONSTRAINT `matches_ibfk_4` FOREIGN KEY (`channels_matches_id`) REFERENCES `matches` (`id`);
+
+ALTER TABLE chats 
+ADD CONSTRAINT `matches_ibfk_5` FOREIGN KEY (`channel_chats_id`) REFERENCES `channels` (`id`);
